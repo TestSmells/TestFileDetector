@@ -6,8 +6,6 @@ import java.util.List;
 
 public class FileEntity {
     private Path path;
-    private int testAnnotationCount;
-    private int testMethodWithoutAnnotationCount;
     private int totalLines;
     private List<MethodEntity> methods;
 
@@ -31,31 +29,27 @@ public class FileEntity {
         this.totalLines = totalLines;
     }
 
-    public int getTestMethodWithoutAnnotationCount() {
-        return testMethodWithoutAnnotationCount;
-    }
-
-    public void setTestMethodWithoutAnnotationCount(int testMethodWithoutAnnotationCount) {
-        this.testMethodWithoutAnnotationCount = testMethodWithoutAnnotationCount;
+    public long getTestMethodWithoutAnnotationCount() {
+        return methods.parallelStream().filter((p)->p.isHasAnnotation()==false && p.isHasTestInName()==true).count();
     }
 
     public String getFilePath() {
         return path.toAbsolutePath().toString();
     }
 
-    public int getTestAnnotationCount() {
-        return testAnnotationCount;
+    public long getTestAnnotationCount() {
+        return methods.parallelStream().filter((p)->p.isHasAnnotation()).count();
     }
 
-    public void setTestAnnotationCount(int testAnnotationCount) {
-        this.testAnnotationCount = testAnnotationCount;
+    public boolean isHasTestInFileName(){
+        return  path.getFileName().toString().toLowerCase().contains("test");
     }
 
     public String getFileName(){
         return path.getFileName().toString();
     }
 
-    public int getTotalTestMethods() {
-        return (testAnnotationCount + testMethodWithoutAnnotationCount);
+    public long getTotalTestMethods() {
+        return (getTestMethodWithoutAnnotationCount() + getTestAnnotationCount());
     }
 }
