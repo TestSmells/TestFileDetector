@@ -37,19 +37,20 @@ public class ResultsWriter {
     private void outputTestMethodResults() throws IOException {
         CSVWriter writer = new CSVWriter(new FileWriter(testMethodCSV.toString()), ',');
         List<String[]> fileLines = new ArrayList<String[]>();
-        String[] columnNames  = {"FilePath", "FileName", "MethodName","TotalLines","HasAnnotation", "HasTestInName"};
+        String[] columnNames  = {"FilePath", "FileName", "MethodName","TotalLines","MethodHasAnnotation", "MethodHasTestInName", "FileHasTestInName"};
         fileLines.add(columnNames);
 
         String[] dataLine;
         for (FileEntity fileEntity: files) {
             for (MethodEntity methodEntity: fileEntity.getMethods()) {
-                dataLine = new String[6];
+                dataLine = new String[7];
                 dataLine[0] = fileEntity.getFilePath();
                 dataLine[1] = fileEntity.getFileName();
                 dataLine[2] = methodEntity.getMethodName();
                 dataLine[3] = String.valueOf(methodEntity.getTotalLines());
                 dataLine[4] = methodEntity.isHasAnnotation()?"True":"False";
                 dataLine[5] = methodEntity.isHasTestInName()?"True":"False";
+                dataLine[6] = fileEntity.isHasTestInFileName()?"True":"False";
 
                 fileLines.add(dataLine);
             }
