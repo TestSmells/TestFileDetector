@@ -31,6 +31,13 @@
             <artifactId>java-symbol-solver-core</artifactId>
             <version>0.5.5</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>3.9</version>
+        </dependency>
+
     </dependencies>
 
 </project>
