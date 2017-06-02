@@ -42,17 +42,21 @@ public class ResultsWriter {
 
         String[] dataLine;
         for (FileEntity fileEntity: files) {
-            for (MethodEntity methodEntity: fileEntity.getMethods()) {
-                dataLine = new String[7];
-                dataLine[0] = fileEntity.getFilePath();
-                dataLine[1] = fileEntity.getFileName();
-                dataLine[2] = methodEntity.getMethodName();
-                dataLine[3] = String.valueOf(methodEntity.getTotalLines());
-                dataLine[4] = methodEntity.isHasAnnotation()?"True":"False";
-                dataLine[5] = methodEntity.isHasTestInName()?"True":"False";
-                dataLine[6] = fileEntity.isHasTestInFileName()?"True":"False";
+            try {
+                for (MethodEntity methodEntity: fileEntity.getMethods()) {
+                    dataLine = new String[7];
+                    dataLine[0] = fileEntity.getFilePath();
+                    dataLine[1] = fileEntity.getFileName();
+                    dataLine[2] = methodEntity.getMethodName();
+                    dataLine[3] = String.valueOf(methodEntity.getTotalLines());
+                    dataLine[4] = methodEntity.isHasAnnotation()?"True":"False";
+                    dataLine[5] = methodEntity.isHasTestInName()?"True":"False";
+                    dataLine[6] = fileEntity.isHasTestInFileName()?"True":"False";
 
-                fileLines.add(dataLine);
+                    fileLines.add(dataLine);
+                }
+            } catch (Exception e) {
+                Util.writeException(e,"File: "+ fileEntity.getFilePath());
             }
         }
 
@@ -69,15 +73,19 @@ public class ResultsWriter {
 
         String[] dataLine;
         for (FileEntity fileEntity: files) {
-            dataLine = new String[6];
-            dataLine[0] = fileEntity.getFilePath();
-            dataLine[1] = fileEntity.getFileName();
-            dataLine[2] = String.valueOf(fileEntity.getMethods().size());
-            dataLine[3] = String.valueOf(fileEntity.getTotalTestMethods());
-            dataLine[4] = String.valueOf(fileEntity.getTestAnnotationCount());
-            dataLine[5] = String.valueOf(fileEntity.getTestMethodWithoutAnnotationCount());
+            try {
+                dataLine = new String[6];
+                dataLine[0] = fileEntity.getFilePath();
+                dataLine[1] = fileEntity.getFileName();
+                dataLine[2] = String.valueOf(fileEntity.getMethods().size());
+                dataLine[3] = String.valueOf(fileEntity.getTotalTestMethods());
+                dataLine[4] = String.valueOf(fileEntity.getTestAnnotationCount());
+                dataLine[5] = String.valueOf(fileEntity.getTestMethodWithoutAnnotationCount());
 
-            fileLines.add(dataLine);
+                fileLines.add(dataLine);
+            } catch (Exception e) {
+                Util.writeException(e,"File: "+ fileEntity.getFilePath());
+            }
         }
 
         writer.writeAll(fileLines,false);
