@@ -6,31 +6,34 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        String file = "C:\\Projects\\TestSmells_ExisitngTools\\samples\\org.xbmc.kore\\app\\src\\test\\java\\org\\xbmc\\kore\\provider\\mediaprovider\\TestValues.java";
-        TestFileDetector testFileDetector;
+        final String rootDirectory = "G:\\Android\\Apps";
 
         //recursively identify all 'java' files in the specified directory
-        System.out.println("Started - Identify all 'java' files");
+        Util.writeOperationLogEntry("Identify all 'java' files", Util.OperationStatus.Started);
         FileWalker fw = new FileWalker();
-        //List<FileEntity> files = fw.getJavaFiles("C:\\Projects\\TestSmells_ExisitngTools\\samples",true);
-        List<FileEntity> files = fw.getJavaTestFiles("C:\\Projects\\TestSmells_ExisitngTools\\samples\\org.xbmc.kore\\app\\src\\androidTest\\java\\org\\xbmc\\kore\\testhelpers",false);
-        System.out.println("Ended - Identify all 'java' files");
+        List<FileEntity> files = fw.getJavaFiles(rootDirectory, true);
+        Util.writeOperationLogEntry("Identify all 'java' files", Util.OperationStatus.Completed);
 
 
         //foreach of the identified 'java' files, obtain details about the methods that they contain
-        System.out.println("Started - Obtain method details");
-        for (FileEntity fileEntity: files) {
-            testFileDetector = new TestFileDetector();
-            fileEntity.setMethods(testFileDetector.parseFile(fileEntity.getFilePath()));
+        Util.writeOperationLogEntry("Obtain method details", Util.OperationStatus.Started);
+        TestFileDetector testFileDetector;
+        for (FileEntity fileEntity : files) {
+            try {
+                testFileDetector = new TestFileDetector();
+                fileEntity.setMethods(testFileDetector.parseFile(fileEntity.getFilePath()));
+            } catch (Exception e) {
+                Util.writeException(e, "File: " + fileEntity.getFilePath());
+            }
         }
-        System.out.println("Ended - Obtain method details");
+        Util.writeOperationLogEntry("Obtain method details", Util.OperationStatus.Completed);
 
 
         //output the results into CSV files
-        System.out.println("Started - Save results to CSV");
+        Util.writeOperationLogEntry("Save results to CSV", Util.OperationStatus.Started);
         ResultsWriter resultsWriter = new ResultsWriter(files);
         resultsWriter.outputToCSV(true);
-        System.out.println("Ended - Save results to CSV");
+        Util.writeOperationLogEntry("Save results to CSV", Util.OperationStatus.Completed);
 
 
     }
