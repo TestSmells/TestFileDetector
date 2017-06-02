@@ -12,7 +12,8 @@ public class Main {
         //recursively identify all 'java' files in the specified directory
         System.out.println("Started - Identify all 'java' files");
         FileWalker fw = new FileWalker();
-        List<FileEntity> files = fw.getJavaFiles("C:\\Projects\\TestSmells_ExisitngTools\\samples",true);
+        //List<FileEntity> files = fw.getJavaFiles("C:\\Projects\\TestSmells_ExisitngTools\\samples",true);
+        List<FileEntity> files = fw.getJavaTestFiles("C:\\Projects\\TestSmells_ExisitngTools\\samples\\org.xbmc.kore\\app\\src\\androidTest\\java\\org\\xbmc\\kore\\testhelpers",false);
         System.out.println("Ended - Identify all 'java' files");
 
 
