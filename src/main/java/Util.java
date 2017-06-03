@@ -32,7 +32,7 @@ public class Util {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(Calendar.getInstance().getTime().toString());
         stringBuilder.append(";");
-        stringBuilder.append(exception.getMessage());
+        stringBuilder.append(exception);
         stringBuilder.append(";");
         stringBuilder.append(message);
 
