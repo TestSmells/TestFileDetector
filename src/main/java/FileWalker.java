@@ -20,11 +20,13 @@ public class FileWalker {
             Files.walk(startDir, 1)
                     .filter(Files::isRegularFile)
                     .forEach(filePath -> {
-                        String fileNameWithoutExtension = filePath.getFileName().toString().substring(0,filePath.getFileName().toString().lastIndexOf("."));
-                        //test files should have 'test' as either a prefix or suffix
-                        if (filePath.toString().toLowerCase().endsWith(".java") &&
-                                (fileNameWithoutExtension.toLowerCase().startsWith("test")) || fileNameWithoutExtension.toLowerCase().endsWith("test"))  {
-                            files.add(new FileEntity(filePath));
+                        if(filePath.getFileName().toString().lastIndexOf(".")!=-1) {
+                            String fileNameWithoutExtension = filePath.getFileName().toString().substring(0, filePath.getFileName().toString().lastIndexOf("."));
+                            //test files should have 'test' as either a prefix or suffix
+                            if (filePath.toString().toLowerCase().endsWith(".java") &&
+                                    (fileNameWithoutExtension.toLowerCase().startsWith("test") || fileNameWithoutExtension.toLowerCase().endsWith("test"))) {
+                                files.add(new FileEntity(filePath));
+                            }
                         }
                     });
         }
@@ -68,11 +70,13 @@ public class FileWalker {
         public FileVisitResult visitFile(Path file,
                                          BasicFileAttributes attrs)
                 throws IOException {
-            String fileNameWithoutExtension = file.getFileName().toString().substring(0,file.getFileName().toString().lastIndexOf("."));
-            //test files should have 'test' as either a prefix or suffix
-            if (file.toString().toLowerCase().endsWith(".java")  &&
-                    (fileNameWithoutExtension.toLowerCase().startsWith("test")) || fileNameWithoutExtension.toLowerCase().endsWith("test")) {
-                files.add(new FileEntity(file));
+            if (file.getFileName().toString().lastIndexOf(".") !=-1) {
+                String fileNameWithoutExtension = file.getFileName().toString().substring(0, file.getFileName().toString().lastIndexOf("."));
+                //test files should have 'test' as either a prefix or suffix
+                if (file.toString().toLowerCase().endsWith(".java") &&
+                        (fileNameWithoutExtension.toLowerCase().startsWith("test") || fileNameWithoutExtension.toLowerCase().endsWith("test"))) {
+                    files.add(new FileEntity(file));
+                }
             }
             return FileVisitResult.CONTINUE;
         }
