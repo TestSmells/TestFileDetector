@@ -20,7 +20,10 @@ public class FileWalker {
             Files.walk(startDir, 1)
                     .filter(Files::isRegularFile)
                     .forEach(filePath -> {
-                        if (filePath.toString().toLowerCase().endsWith(".java") && filePath.getFileName().toString().toLowerCase().contains("test")) {
+                        String fileNameWithoutExtension = filePath.getFileName().toString().substring(0,filePath.getFileName().toString().lastIndexOf("."));
+                        //test files should have 'test' as either a prefix or suffix
+                        if (filePath.toString().toLowerCase().endsWith(".java") &&
+                                (fileNameWithoutExtension.toLowerCase().startsWith("test")) || fileNameWithoutExtension.toLowerCase().endsWith("test"))  {
                             files.add(new FileEntity(filePath));
                         }
                     });
@@ -65,7 +68,10 @@ public class FileWalker {
         public FileVisitResult visitFile(Path file,
                                          BasicFileAttributes attrs)
                 throws IOException {
-            if (file.toString().toLowerCase().endsWith(".java") && file.getFileName().toString().toLowerCase().contains("test")) {
+            String fileNameWithoutExtension = file.getFileName().toString().substring(0,file.getFileName().toString().lastIndexOf("."));
+            //test files should have 'test' as either a prefix or suffix
+            if (file.toString().toLowerCase().endsWith(".java")  &&
+                    (fileNameWithoutExtension.toLowerCase().startsWith("test")) || fileNameWithoutExtension.toLowerCase().endsWith("test")) {
                 files.add(new FileEntity(file));
             }
             return FileVisitResult.CONTINUE;
