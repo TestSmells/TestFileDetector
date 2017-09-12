@@ -6,13 +6,13 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        final String rootDirectory = "G:\\Android\\Apps";
+        final String rootDirectory = "C:\\Projects\\TestSmells\\testing";
 
         //recursively identify all 'java' files in the specified directory
-        Util.writeOperationLogEntry("Identify all 'java' files", Util.OperationStatus.Started);
+        Util.writeOperationLogEntry("Identify all 'java' test files", Util.OperationStatus.Started);
         FileWalker fw = new FileWalker();
-        List<FileEntity> files = fw.getJavaFiles(rootDirectory, true);
-        Util.writeOperationLogEntry("Identify all 'java' files", Util.OperationStatus.Completed);
+        List<FileEntity> files = fw.getJavaTestFiles(rootDirectory, true);
+        Util.writeOperationLogEntry("Identify all 'java' test files", Util.OperationStatus.Completed);
 
 
         //foreach of the identified 'java' files, obtain details about the methods that they contain
