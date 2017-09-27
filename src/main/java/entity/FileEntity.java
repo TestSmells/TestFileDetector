@@ -83,4 +83,19 @@ public class FileEntity {
     public boolean getHas_orgjunitAssert(){
         return imports.get("org.junit.Assert");
     }
+
+    public String getRelativeFilePath(){
+        String filePath = path.toAbsolutePath().toString();
+        String[] splitString = filePath.split("\\\\");
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < 5; i++) {
+            stringBuilder.append(splitString[i] + "\\");
+        }
+        return filePath.substring(stringBuilder.toString().length()).replace("\\","/");
+    }
+
+    public String getAppName(){
+        String filePath = path.toAbsolutePath().toString();
+        return filePath.split("\\\\")[3];
+    }
 }
