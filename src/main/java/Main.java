@@ -20,8 +20,9 @@ public class Main {
         TestFileDetector testFileDetector;
         for (FileEntity fileEntity : files) {
             try {
-                testFileDetector = new TestFileDetector();
-                fileEntity.setMethods(testFileDetector.parseFile(fileEntity.getFilePath()));
+                testFileDetector = new TestFileDetector(fileEntity.getFilePath());
+                fileEntity.setMethods(testFileDetector.getMethodDetails());
+                fileEntity.setImports(testFileDetector.getImportDetails());
             } catch (Exception e) {
                 Util.writeException(e, "File: " + fileEntity.getFilePath());
             }

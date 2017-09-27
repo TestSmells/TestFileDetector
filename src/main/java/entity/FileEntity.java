@@ -2,12 +2,14 @@ package  entity;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 
 
 public class FileEntity {
     private Path path;
     private int totalLines;
     private List<MethodEntity> methods;
+    private Map<String, Boolean> imports;
 
     public FileEntity(Path path) {
         this.path = path;
@@ -19,6 +21,10 @@ public class FileEntity {
 
     public void setMethods(List<MethodEntity> methods) {
         this.methods = methods;
+    }
+
+    public void setImports(Map<String, Boolean> imports) {
+        this.imports = imports;
     }
 
     public int getTotalLines() {
@@ -51,5 +57,30 @@ public class FileEntity {
 
     public long getTotalTestMethods() {
         return (getTestMethodWithoutAnnotationCount() + getTestAnnotationCount());
+    }
+
+    public boolean getHas_junitframeworkTest(){
+        return imports.get("junit.framework.Test");
+    }
+
+    public boolean getHas_junitframeworkTestCase(){
+        return imports.get("junit.framework.TestCase");
+    }
+
+    public boolean getHas_orgjunitTest(){
+        return imports.get("org.junit.Test");
+    }
+
+    public boolean getHas_androidtestAndroidTestCase(){
+        return imports.get("android.test.AndroidTestCase");
+    }
+
+    public boolean getHas_androidtestInstrumentationTestCase()
+    {
+        return  imports.get("android.test.InstrumentationTestCase");
+    }
+
+    public boolean getHas_orgjunitAssert(){
+        return imports.get("org.junit.Assert");
     }
 }

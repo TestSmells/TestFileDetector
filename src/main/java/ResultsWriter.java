@@ -68,13 +68,14 @@ public class ResultsWriter {
     private void outputTestFileResults() throws IOException {
         CSVWriter writer = new CSVWriter(new FileWriter(testFileCSV.toString()), ',');
         List<String[]> fileLines = new ArrayList<String[]>();
-        String[] columnNames  = {"FilePath", "FileName", "TotalMethods","TotalTestMethods","AnnotationCount", "TestsWithoutAnnotationCount", "HasTestInFileName"};
+        String[] columnNames  = {"FilePath", "FileName", "TotalMethods","TotalTestMethods","AnnotationCount", "TestsWithoutAnnotationCount", "HasTestInFileName",
+                "junit.framework.Test", "junit.framework.TestCase", "org.junit.Test", "android.test.AndroidTestCase", "android.test.InstrumentationTestCase", "org.junit.Assert"};
         fileLines.add(columnNames);
 
         String[] dataLine;
         for (FileEntity fileEntity: files) {
             try {
-                dataLine = new String[7];
+                dataLine = new String[13];
                 dataLine[0] = fileEntity.getFilePath();
                 dataLine[1] = fileEntity.getFileName();
                 dataLine[2] = String.valueOf(fileEntity.getMethods().size());
@@ -82,6 +83,12 @@ public class ResultsWriter {
                 dataLine[4] = String.valueOf(fileEntity.getTestAnnotationCount());
                 dataLine[5] = String.valueOf(fileEntity.getTestMethodWithoutAnnotationCount());
                 dataLine[6] = fileEntity.isHasTestInFileName()?"True":"False";
+                dataLine[7] = fileEntity.getHas_junitframeworkTest()?"True":"False";
+                dataLine[8] = fileEntity.getHas_junitframeworkTestCase()?"True":"False";
+                dataLine[9] = fileEntity.getHas_orgjunitTest()?"True":"False";
+                dataLine[10] = fileEntity.getHas_androidtestAndroidTestCase()?"True":"False";
+                dataLine[11] = fileEntity.getHas_androidtestInstrumentationTestCase()?"True":"False";
+                dataLine[12] = fileEntity.getHas_orgjunitTest()?"True":"False";
 
                 fileLines.add(dataLine);
             } catch (Exception e) {
