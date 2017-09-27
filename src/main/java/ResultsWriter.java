@@ -88,7 +88,7 @@ public class ResultsWriter {
                 dataLine[9] = fileEntity.getHas_orgjunitTest()?"True":"False";
                 dataLine[10] = fileEntity.getHas_androidtestAndroidTestCase()?"True":"False";
                 dataLine[11] = fileEntity.getHas_androidtestInstrumentationTestCase()?"True":"False";
-                dataLine[12] = fileEntity.getHas_orgjunitTest()?"True":"False";
+                dataLine[12] = fileEntity.getHas_orgjunitAssert()?"True":"False";
 
                 fileLines.add(dataLine);
             } catch (Exception e) {
