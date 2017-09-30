@@ -26,6 +26,7 @@ public class TestFileDetector {
         imports.put("android.test.AndroidTestCase",false);
         imports.put("android.test.InstrumentationTestCase",false);
         imports.put("org.junit.Assert",false);
+        imports.put("android.test.ActivityInstrumentationTestCase2",false);
 
         parseFile(absoluteFilePath);
     }
@@ -94,6 +95,9 @@ public class TestFileDetector {
                 imports.replace("org.junit.Assert",false,true);
             }
 
+            if (n.getNameAsString().contains("android.test.ActivityInstrumentationTestCase2")){
+                imports.replace("android.test.ActivityInstrumentationTestCase2",false,true);
+            }
 
             super.visit(n, arg);
         }

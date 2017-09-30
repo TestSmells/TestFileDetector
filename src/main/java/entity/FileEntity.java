@@ -80,6 +80,11 @@ public class FileEntity {
         return  imports.get("android.test.InstrumentationTestCase");
     }
 
+    public boolean getHas_androidtestActivityInstrumentationTestCase2()
+    {
+        return  imports.get("android.test.ActivityInstrumentationTestCase2");
+    }
+
     public boolean getHas_orgjunitAssert(){
         return imports.get("org.junit.Assert");
     }

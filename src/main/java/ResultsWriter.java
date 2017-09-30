@@ -44,7 +44,7 @@ public class ResultsWriter {
         for (FileEntity fileEntity: files) {
             try {
                 for (MethodEntity methodEntity: fileEntity.getMethods()) {
-                    dataLine = new String[9];
+                    dataLine = new String[10];
                     dataLine[0] = fileEntity.getAppName();
                     dataLine[1] = fileEntity.getFilePath();
                     dataLine[2] = fileEntity.getRelativeFilePath();
@@ -54,6 +54,7 @@ public class ResultsWriter {
                     dataLine[6] = methodEntity.isHasAnnotation()?"True":"False";
                     dataLine[7] = methodEntity.isHasTestInName()?"True":"False";
                     dataLine[8] = fileEntity.isHasTestInFileName()?"True":"False";
+                    dataLine[9] = fileEntity.getHas_androidtestActivityInstrumentationTestCase2()?"True":"False";
 
                     fileLines.add(dataLine);
                 }
@@ -71,13 +72,13 @@ public class ResultsWriter {
         CSVWriter writer = new CSVWriter(new FileWriter(testFileCSV.toString()), ',');
         List<String[]> fileLines = new ArrayList<String[]>();
         String[] columnNames  = {"App","FilePath", "RelativeFilePath", "FileName", "TotalMethods","TotalTestMethods","AnnotationCount", "TestsWithoutAnnotationCount", "HasTestInFileName",
-                "junit.framework.Test", "junit.framework.TestCase", "org.junit.Test", "android.test.AndroidTestCase", "android.test.InstrumentationTestCase", "org.junit.Assert"};
+                "junitFrameworkTest", "junitFrameworkTestCase", "orgJunitTest", "androidTestAndroidTestCase", "androidTestInstrumentationTestCase", "orgJunitAssert", "androidTestActivityInstrumentationTestCase2"};
         fileLines.add(columnNames);
 
         String[] dataLine;
         for (FileEntity fileEntity: files) {
             try {
-                dataLine = new String[15];
+                dataLine = new String[16];
                 dataLine[0] = fileEntity.getAppName();
                 dataLine[1] = fileEntity.getFilePath();
                 dataLine[2] = fileEntity.getRelativeFilePath();
@@ -93,6 +94,7 @@ public class ResultsWriter {
                 dataLine[12] = fileEntity.getHas_androidtestAndroidTestCase()?"True":"False";
                 dataLine[13] = fileEntity.getHas_androidtestInstrumentationTestCase()?"True":"False";
                 dataLine[14] = fileEntity.getHas_orgjunitAssert()?"True":"False";
+                dataLine[15] = fileEntity.getHas_androidtestActivityInstrumentationTestCase2()?"True":"False";
 
                 fileLines.add(dataLine);
             } catch (Exception e) {
