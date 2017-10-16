@@ -103,4 +103,9 @@ public class FileEntity {
         String filePath = path.toAbsolutePath().toString();
         return filePath.split("\\\\")[3];
     }
+
+    public String getTagName(){
+        String filePath = path.toAbsolutePath().toString();
+        return filePath.split("\\\\")[4];
+    }
 }
