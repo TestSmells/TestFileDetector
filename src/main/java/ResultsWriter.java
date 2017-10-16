@@ -37,24 +37,25 @@ public class ResultsWriter {
     private void outputTestMethodResults() throws IOException {
         CSVWriter writer = new CSVWriter(new FileWriter(testMethodCSV.toString()), ',');
         List<String[]> fileLines = new ArrayList<String[]>();
-        String[] columnNames  = {"App", "FilePath", "RelativeFilePath", "FileName", "MethodName","TotalLines","MethodHasAnnotation", "MethodHasTestInName", "FileHasTestInName"};
+        String[] columnNames  = {"App","Tag", "FilePath", "RelativeFilePath", "FileName", "MethodName","TotalLines","MethodHasAnnotation", "MethodHasTestInName", "FileHasTestInName"};
         fileLines.add(columnNames);
 
         String[] dataLine;
         for (FileEntity fileEntity: files) {
             try {
                 for (MethodEntity methodEntity: fileEntity.getMethods()) {
-                    dataLine = new String[10];
+                    dataLine = new String[11];
                     dataLine[0] = fileEntity.getAppName();
-                    dataLine[1] = fileEntity.getFilePath();
-                    dataLine[2] = fileEntity.getRelativeFilePath();
-                    dataLine[3] = fileEntity.getFileName();
-                    dataLine[4] = methodEntity.getMethodName();
-                    dataLine[5] = String.valueOf(methodEntity.getTotalLines());
-                    dataLine[6] = methodEntity.isHasAnnotation()?"True":"False";
-                    dataLine[7] = methodEntity.isHasTestInName()?"True":"False";
-                    dataLine[8] = fileEntity.isHasTestInFileName()?"True":"False";
-                    dataLine[9] = fileEntity.getHas_androidtestActivityInstrumentationTestCase2()?"True":"False";
+                    dataLine[1] = fileEntity.getTagName();
+                    dataLine[2] = fileEntity.getFilePath();
+                    dataLine[3] = fileEntity.getRelativeFilePath();
+                    dataLine[4] = fileEntity.getFileName();
+                    dataLine[5] = methodEntity.getMethodName();
+                    dataLine[6] = String.valueOf(methodEntity.getTotalLines());
+                    dataLine[7] = methodEntity.isHasAnnotation()?"True":"False";
+                    dataLine[8] = methodEntity.isHasTestInName()?"True":"False";
+                    dataLine[9] = fileEntity.isHasTestInFileName()?"True":"False";
+                    dataLine[10] = fileEntity.getHas_androidtestActivityInstrumentationTestCase2()?"True":"False";
 
                     fileLines.add(dataLine);
                 }
@@ -71,30 +72,31 @@ public class ResultsWriter {
     private void outputTestFileResults() throws IOException {
         CSVWriter writer = new CSVWriter(new FileWriter(testFileCSV.toString()), ',');
         List<String[]> fileLines = new ArrayList<String[]>();
-        String[] columnNames  = {"App","FilePath", "RelativeFilePath", "FileName", "TotalMethods","TotalTestMethods","AnnotationCount", "TestsWithoutAnnotationCount", "HasTestInFileName",
+        String[] columnNames  = {"App","Tag","FilePath", "RelativeFilePath", "FileName", "TotalMethods","TotalTestMethods","AnnotationCount", "TestsWithoutAnnotationCount", "HasTestInFileName",
                 "junitFrameworkTest", "junitFrameworkTestCase", "orgJunitTest", "androidTestAndroidTestCase", "androidTestInstrumentationTestCase", "orgJunitAssert", "androidTestActivityInstrumentationTestCase2"};
         fileLines.add(columnNames);
 
         String[] dataLine;
         for (FileEntity fileEntity: files) {
             try {
-                dataLine = new String[16];
+                dataLine = new String[17];
                 dataLine[0] = fileEntity.getAppName();
-                dataLine[1] = fileEntity.getFilePath();
-                dataLine[2] = fileEntity.getRelativeFilePath();
-                dataLine[3] = fileEntity.getFileName();
-                dataLine[4] = String.valueOf(fileEntity.getMethods().size());
-                dataLine[5] = String.valueOf(fileEntity.getTotalTestMethods());
-                dataLine[6] = String.valueOf(fileEntity.getTestAnnotationCount());
-                dataLine[7] = String.valueOf(fileEntity.getTestMethodWithoutAnnotationCount());
-                dataLine[8] = fileEntity.isHasTestInFileName()?"True":"False";
-                dataLine[9] = fileEntity.getHas_junitframeworkTest()?"True":"False";
-                dataLine[10] = fileEntity.getHas_junitframeworkTestCase()?"True":"False";
-                dataLine[11] = fileEntity.getHas_orgjunitTest()?"True":"False";
-                dataLine[12] = fileEntity.getHas_androidtestAndroidTestCase()?"True":"False";
-                dataLine[13] = fileEntity.getHas_androidtestInstrumentationTestCase()?"True":"False";
-                dataLine[14] = fileEntity.getHas_orgjunitAssert()?"True":"False";
-                dataLine[15] = fileEntity.getHas_androidtestActivityInstrumentationTestCase2()?"True":"False";
+                dataLine[1] = fileEntity.getTagName();
+                dataLine[2] = fileEntity.getFilePath();
+                dataLine[3] = fileEntity.getRelativeFilePath();
+                dataLine[4] = fileEntity.getFileName();
+                dataLine[5] = String.valueOf(fileEntity.getMethods().size());
+                dataLine[6] = String.valueOf(fileEntity.getTotalTestMethods());
+                dataLine[7] = String.valueOf(fileEntity.getTestAnnotationCount());
+                dataLine[8] = String.valueOf(fileEntity.getTestMethodWithoutAnnotationCount());
+                dataLine[9] = fileEntity.isHasTestInFileName()?"True":"False";
+                dataLine[10] = fileEntity.getHas_junitframeworkTest()?"True":"False";
+                dataLine[11] = fileEntity.getHas_junitframeworkTestCase()?"True":"False";
+                dataLine[12] = fileEntity.getHas_orgjunitTest()?"True":"False";
+                dataLine[13] = fileEntity.getHas_androidtestAndroidTestCase()?"True":"False";
+                dataLine[14] = fileEntity.getHas_androidtestInstrumentationTestCase()?"True":"False";
+                dataLine[15] = fileEntity.getHas_orgjunitAssert()?"True":"False";
+                dataLine[16] = fileEntity.getHas_androidtestActivityInstrumentationTestCase2()?"True":"False";
 
                 fileLines.add(dataLine);
             } catch (Exception e) {
