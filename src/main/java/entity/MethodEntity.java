@@ -10,7 +10,7 @@ public class MethodEntity {
    }
 
    public boolean isHasTestInName(){
-       return methodName.toLowerCase().startsWith("test");
+       return methodName.startsWith("test");
    }
 
     public boolean isHasAnnotation() {
