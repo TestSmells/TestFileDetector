@@ -80,6 +80,11 @@ public class FileEntity {
         return  imports.get("android.test.InstrumentationTestCase");
     }
 
+    public boolean getHas_androidtestActivityInstrumentationTestCase2()
+    {
+        return  imports.get("android.test.ActivityInstrumentationTestCase2");
+    }
+
     public boolean getHas_orgjunitAssert(){
         return imports.get("org.junit.Assert");
     }
@@ -97,5 +102,10 @@ public class FileEntity {
     public String getAppName(){
         String filePath = path.toAbsolutePath().toString();
         return filePath.split("\\\\")[3];
+    }
+
+    public String getTagName(){
+        String filePath = path.toAbsolutePath().toString();
+        return filePath.split("\\\\")[4];
     }
 }
