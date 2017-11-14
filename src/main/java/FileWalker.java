@@ -22,9 +22,10 @@ public class FileWalker {
                     .forEach(filePath -> {
                         if(filePath.getFileName().toString().lastIndexOf(".")!=-1) {
                             String fileNameWithoutExtension = filePath.getFileName().toString().substring(0, filePath.getFileName().toString().lastIndexOf("."));
-                            //test files should have 'test' as either a prefix or suffix
+                            //test files should have 'test(s)' as either a prefix or suffix
                             if (filePath.toString().toLowerCase().endsWith(".java") &&
-                                    (fileNameWithoutExtension.toLowerCase().startsWith("test") || fileNameWithoutExtension.toLowerCase().endsWith("test"))) {
+                                    (fileNameWithoutExtension.toLowerCase().startsWith("test") || fileNameWithoutExtension.toLowerCase().endsWith("test") ||
+                                        fileNameWithoutExtension.toLowerCase().endsWith("tests") || fileNameWithoutExtension.toLowerCase().endsWith("tests"))) {
                                 files.add(new FileEntity(filePath));
                             }
                         }
@@ -72,9 +73,10 @@ public class FileWalker {
                 throws IOException {
             if (file.getFileName().toString().lastIndexOf(".") !=-1) {
                 String fileNameWithoutExtension = file.getFileName().toString().substring(0, file.getFileName().toString().lastIndexOf("."));
-                //test files should have 'test' as either a prefix or suffix
+                //test files should have 'test(s)' as either a prefix or suffix
                 if (file.toString().toLowerCase().endsWith(".java") &&
-                        (fileNameWithoutExtension.toLowerCase().startsWith("test") || fileNameWithoutExtension.toLowerCase().endsWith("test"))) {
+                        (fileNameWithoutExtension.toLowerCase().startsWith("test") || fileNameWithoutExtension.toLowerCase().endsWith("test") ||
+                            fileNameWithoutExtension.toLowerCase().endsWith("tests") || fileNameWithoutExtension.toLowerCase().endsWith("tests"))) {
                     files.add(new FileEntity(file));
                 }
             }
