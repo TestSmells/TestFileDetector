@@ -1,17 +1,19 @@
 package entity;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 
-public class FileEntity {
+public class ClassEntity {
     private Path path;
-    private int totalLines;
     private List<MethodEntity> methods;
-    private Map<String, Boolean> imports;
+   // private Map<String, Boolean> imports;
+    private ArrayList<String> imports;
+    private String className;
 
-    public FileEntity(Path path) {
+    public ClassEntity(Path path) {
         this.path = path;
     }
 
@@ -23,16 +25,18 @@ public class FileEntity {
         this.methods = methods;
     }
 
-    public void setImports(Map<String, Boolean> imports) {
+    public void setImports(ArrayList<String> imports) {
         this.imports = imports;
     }
 
-    public int getTotalLines() {
-        return totalLines;
+    public long getTotalImports() {
+        return imports.stream().distinct().count();
     }
 
-    public void setTotalLines(int totalLines) {
-        this.totalLines = totalLines;
+    public int getTotalMethods(){return methods.size();}
+
+    public long getTotalMethodStatement() {
+        return methods.stream().mapToLong(i -> i.getTotalStatements()).sum();
     }
 
     public long getTestMethodWithoutAnnotationCount() {
@@ -55,9 +59,23 @@ public class FileEntity {
             return false;
     }
 
+    public boolean isHasTestInClassName() {
+        String name  = className.toLowerCase();
+        if (name.startsWith("test") || name.startsWith("tests") || name.endsWith("test") || name.endsWith("tests"))
+            return true;
+        else
+            return false;
+    }
+
     public String getFileName() {
         return path.getFileName().toString();
     }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className){this.className = className;}
 
     public String getFileNameWithoutExtension() {
         String fileName = path.getFileName().toString().substring(0,path.getFileName().toString().toLowerCase().lastIndexOf(".java"));
@@ -69,31 +87,31 @@ public class FileEntity {
     }
 
     public boolean getHas_junitframeworkTest() {
-        return imports.get("junit.framework.Test");
+        return imports.stream().anyMatch(i -> i.equals("junit.framework.Test"));
     }
 
     public boolean getHas_junitframeworkTestCase() {
-        return imports.get("junit.framework.TestCase");
+        return imports.stream().anyMatch(i -> i.equals("junit.framework.TestCase"));
     }
 
     public boolean getHas_orgjunitTest() {
-        return imports.get("org.junit.Test");
+        return imports.stream().anyMatch(i -> i.equals("org.junit.Test"));
     }
 
     public boolean getHas_androidtestAndroidTestCase() {
-        return imports.get("android.test.AndroidTestCase");
+        return imports.stream().anyMatch(i -> i.equals("android.test.AndroidTestCase"));
     }
 
     public boolean getHas_androidtestInstrumentationTestCase() {
-        return imports.get("android.test.InstrumentationTestCase");
+        return imports.stream().anyMatch(i -> i.equals("android.test.InstrumentationTestCase"));
     }
 
     public boolean getHas_androidtestActivityInstrumentationTestCase2() {
-        return imports.get("android.test.ActivityInstrumentationTestCase2");
+        return imports.stream().anyMatch(i -> i.equals("android.test.ActivityInstrumentationTestCase2"));
     }
 
     public boolean getHas_orgjunitAssert() {
-        return imports.get("org.junit.Assert");
+        return imports.stream().anyMatch(i -> i.equals("org.junit.Assert"));
     }
 
     public String getRelativeFilePath() {
