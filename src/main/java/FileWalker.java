@@ -1,4 +1,4 @@
-import entity.FileEntity;
+import entity.ClassEntity;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileWalker {
-    private List<FileEntity> files;
+    private List<Path> files;
 
 
-    public List<FileEntity> getJavaTestFiles(String directoryPath, boolean recursive) throws IOException {
+    public List<Path> getJavaTestFiles(String directoryPath, boolean recursive) throws IOException {
         files = new ArrayList<>();
         Path startDir = Paths.get(directoryPath);
 
@@ -26,7 +26,7 @@ public class FileWalker {
                             if (filePath.toString().toLowerCase().endsWith(".java") &&
                                     (fileNameWithoutExtension.toLowerCase().startsWith("test") || fileNameWithoutExtension.toLowerCase().endsWith("test") ||
                                         fileNameWithoutExtension.toLowerCase().endsWith("tests") || fileNameWithoutExtension.toLowerCase().endsWith("tests"))) {
-                                files.add(new FileEntity(filePath));
+                                files.add(filePath);
                             }
                         }
                     });
@@ -34,7 +34,7 @@ public class FileWalker {
         return files;
     }
 
-    public List<FileEntity> getJavaFiles(String directoryPath, boolean recursive) throws IOException {
+    public List<Path> getJavaFiles(String directoryPath, boolean recursive) throws IOException {
         files = new ArrayList<>();
         Path startDir = Paths.get(directoryPath);
 
@@ -45,7 +45,7 @@ public class FileWalker {
                     .filter(Files::isRegularFile)
                     .forEach(filePath -> {
                         if (filePath.toString().toLowerCase().endsWith(".java")) {
-                            files.add(new FileEntity(filePath));
+                            files.add(filePath);
                         }
                     });
         }
@@ -59,7 +59,7 @@ public class FileWalker {
                 throws IOException {
 
             if (file.toString().toLowerCase().endsWith(".java")) {
-                files.add(new FileEntity(file));
+                files.add(file);
             }
 
             return FileVisitResult.CONTINUE;
@@ -77,7 +77,7 @@ public class FileWalker {
                 if (file.toString().toLowerCase().endsWith(".java") &&
                         (fileNameWithoutExtension.toLowerCase().startsWith("test") || fileNameWithoutExtension.toLowerCase().endsWith("test") ||
                             fileNameWithoutExtension.toLowerCase().endsWith("tests") || fileNameWithoutExtension.toLowerCase().endsWith("tests"))) {
-                    files.add(new FileEntity(file));
+                    files.add(file);
                 }
             }
             return FileVisitResult.CONTINUE;

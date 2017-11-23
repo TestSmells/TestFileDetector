@@ -1,5 +1,5 @@
 import com.opencsv.CSVWriter;
-import entity.FileEntity;
+import entity.ClassEntity;
 import entity.MethodEntity;
 
 import java.io.FileWriter;
@@ -11,103 +11,146 @@ import java.util.List;
 
 public class ResultsWriter {
 
-    List<FileEntity>  files;
-    String testFileCSV,testMethodCSV;
+    private CSVWriter classCSVWriter, methodCSVWriter;
 
-    public ResultsWriter(List<FileEntity>  files){
-        this.files = files;
+    public static ResultsWriter createResultsWriter() throws IOException {
+        return new ResultsWriter();
     }
 
-    public void outputToCSV(boolean includeMethodDetails) throws IOException {
-        String time =  String.valueOf(Calendar.getInstance().getTimeInMillis());
+    private ResultsWriter() throws IOException {
+        String time = String.valueOf(Calendar.getInstance().getTimeInMillis());
+        String classFileName = MessageFormat.format("{0}_{1}_{2}.{3}", "Output", "Class", time, "csv");
+        String methodFileName = MessageFormat.format("{0}_{1}_{2}.{3}", "Output", "Method", time, "csv");
+        methodCSVWriter = new CSVWriter(new FileWriter(methodFileName), ',');
+        classCSVWriter = new CSVWriter(new FileWriter(classFileName), ',');
 
-        if(includeMethodDetails){
-           testFileCSV = MessageFormat.format("{0}_{1}_{2}.{3}", "Output","TestFile",time, "csv");
-           testMethodCSV = MessageFormat.format("{0}_{1}_{2}.{3}", "Output","TestMethod", time, "csv");
-            outputTestFileResults();
-            outputTestMethodResults();
-       }
-       else
-        {
-            testFileCSV = MessageFormat.format("{0}_{1}_{2}.{3}", "Output","TestFile", time, "csv");
-            outputTestFileResults();
-        }
+        createClassFile();
+        createMethodFile();
     }
 
-    private void outputTestMethodResults() throws IOException {
-        CSVWriter writer = new CSVWriter(new FileWriter(testMethodCSV.toString()), ',');
+    private void createClassFile() throws IOException {
         List<String[]> fileLines = new ArrayList<String[]>();
-        String[] columnNames  = {"App","Tag", "FilePath", "RelativeFilePath", "FileName", "MethodName","TotalLines","MethodHasAnnotation", "MethodHasTestInName", "FileHasTestInName"};
+        String[] columnNames = {
+                "App",
+                "Tag",
+                "FilePath",
+                "RelativeFilePath",
+                "FileName",
+                "ClassName",
+                "TotalImports",
+                "TotalMethods",
+                "TotalMethodStatements",
+                "TotalTestMethods",
+                "AnnotationCount",
+                "TestsWithoutAnnotationCount",
+                "HasTestInFileName",
+                "HasTestInClassName",
+                "junitFrameworkTest",
+                "junitFrameworkTestCase",
+                "orgJunitTest",
+                "androidTestAndroidTestCase",
+                "androidTestInstrumentationTestCase",
+                "orgJunitAssert",
+                "androidTestActivityInstrumentationTestCase2"
+        };
         fileLines.add(columnNames);
 
-        String[] dataLine;
-        for (FileEntity fileEntity: files) {
-            try {
-                for (MethodEntity methodEntity: fileEntity.getMethods()) {
-                    dataLine = new String[11];
-                    dataLine[0] = fileEntity.getAppName();
-                    dataLine[1] = fileEntity.getTagName();
-                    dataLine[2] = fileEntity.getFilePath();
-                    dataLine[3] = fileEntity.getRelativeFilePath();
-                    dataLine[4] = fileEntity.getFileName();
-                    dataLine[5] = methodEntity.getMethodName();
-                    dataLine[6] = String.valueOf(methodEntity.getTotalLines());
-                    dataLine[7] = methodEntity.isHasAnnotation()?"True":"False";
-                    dataLine[8] = methodEntity.isHasTestInName()?"True":"False";
-                    dataLine[9] = fileEntity.isHasTestInFileName()?"True":"False";
-                    dataLine[10] = fileEntity.getHas_androidtestActivityInstrumentationTestCase2()?"True":"False";
-
-                    fileLines.add(dataLine);
-                }
-            } catch (Exception e) {
-                Util.writeException(e,"File: "+ fileEntity.getFilePath());
-            }
-        }
-
-        writer.writeAll(fileLines,false);
-
-        writer.close();
+        classCSVWriter.writeAll(fileLines, false);
+        classCSVWriter.flush();
     }
 
-    private void outputTestFileResults() throws IOException {
-        CSVWriter writer = new CSVWriter(new FileWriter(testFileCSV.toString()), ',');
+    private void createMethodFile() throws IOException {
         List<String[]> fileLines = new ArrayList<String[]>();
-        String[] columnNames  = {"App","Tag","FilePath", "RelativeFilePath", "FileName", "TotalMethods","TotalTestMethods","AnnotationCount", "TestsWithoutAnnotationCount", "HasTestInFileName",
-                "junitFrameworkTest", "junitFrameworkTestCase", "orgJunitTest", "androidTestAndroidTestCase", "androidTestInstrumentationTestCase", "orgJunitAssert", "androidTestActivityInstrumentationTestCase2"};
+        String[] columnNames = {
+                "App",
+                "Tag",
+                "FilePath",
+                "RelativeFilePath",
+                "FileName",
+                "ClassName",
+                "MethodName",
+                "TotalStatements",
+                "TotalParameters",
+                "ReturnType",
+                "AccessModifier",
+                "MethodHasAnnotation",
+                "MethodHasTestInName",
+                "FileHasTestInName",
+                "ClassHasTestInName"
+        };
         fileLines.add(columnNames);
 
-        String[] dataLine;
-        for (FileEntity fileEntity: files) {
-            try {
-                dataLine = new String[17];
-                dataLine[0] = fileEntity.getAppName();
-                dataLine[1] = fileEntity.getTagName();
-                dataLine[2] = fileEntity.getFilePath();
-                dataLine[3] = fileEntity.getRelativeFilePath();
-                dataLine[4] = fileEntity.getFileName();
-                dataLine[5] = String.valueOf(fileEntity.getMethods().size());
-                dataLine[6] = String.valueOf(fileEntity.getTotalTestMethods());
-                dataLine[7] = String.valueOf(fileEntity.getTestAnnotationCount());
-                dataLine[8] = String.valueOf(fileEntity.getTestMethodWithoutAnnotationCount());
-                dataLine[9] = fileEntity.isHasTestInFileName()?"True":"False";
-                dataLine[10] = fileEntity.getHas_junitframeworkTest()?"True":"False";
-                dataLine[11] = fileEntity.getHas_junitframeworkTestCase()?"True":"False";
-                dataLine[12] = fileEntity.getHas_orgjunitTest()?"True":"False";
-                dataLine[13] = fileEntity.getHas_androidtestAndroidTestCase()?"True":"False";
-                dataLine[14] = fileEntity.getHas_androidtestInstrumentationTestCase()?"True":"False";
-                dataLine[15] = fileEntity.getHas_orgjunitAssert()?"True":"False";
-                dataLine[16] = fileEntity.getHas_androidtestActivityInstrumentationTestCase2()?"True":"False";
-
-                fileLines.add(dataLine);
-            } catch (Exception e) {
-                Util.writeException(e,"File: "+ fileEntity.getFilePath());
-            }
-        }
-
-        writer.writeAll(fileLines,false);
-
-        writer.close();
+        methodCSVWriter.writeAll(fileLines, false);
+        methodCSVWriter.flush();
     }
 
+    public void outputToCSV(ClassEntity classEntity) throws IOException {
+        outputClassDetails(classEntity);
+        outputMethodDetails(classEntity);
+    }
 
+    public void closeOutputFiles() throws IOException {
+        classCSVWriter.close();
+        methodCSVWriter.close();
+    }
+
+    private void outputMethodDetails(ClassEntity classEntity) throws IOException {
+        List<String[]> fileLines = new ArrayList<String[]>();
+        String[] dataLine;
+        for (MethodEntity methodEntity : classEntity.getMethods()) {
+
+            dataLine = new String[15];
+            dataLine[0] = classEntity.getAppName();
+            dataLine[1] = classEntity.getTagName();
+            dataLine[2] = classEntity.getFilePath();
+            dataLine[3] = classEntity.getRelativeFilePath();
+            dataLine[4] = classEntity.getFileName();
+            dataLine[5] = classEntity.getClassName();
+            dataLine[6] = methodEntity.getMethodName();
+            dataLine[7] = String.valueOf(methodEntity.getTotalStatements());
+            dataLine[8] = String.valueOf(methodEntity.getParameterCount());
+            dataLine[9] = methodEntity.getReturnType();
+            dataLine[10] = methodEntity.getAccessModifier();
+            dataLine[11] = String.valueOf(methodEntity.isHasAnnotation());
+            dataLine[12] = String.valueOf(methodEntity.isHasTestInName());
+            dataLine[13] = String.valueOf(classEntity.isHasTestInFileName());
+            dataLine[14] = String.valueOf(classEntity.isHasTestInClassName());
+
+            fileLines.add(dataLine);
+        }
+        methodCSVWriter.writeAll(fileLines, false);
+        methodCSVWriter.flush();
+    }
+
+    private void outputClassDetails(ClassEntity classEntity) throws IOException {
+        List<String[]> fileLines = new ArrayList<String[]>();
+        String[] dataLine;
+
+        dataLine = new String[20];
+        dataLine[0] = classEntity.getAppName();
+        dataLine[1] = classEntity.getTagName();
+        dataLine[2] = classEntity.getFilePath();
+        dataLine[3] = classEntity.getRelativeFilePath();
+        dataLine[4] = classEntity.getFileName();
+        dataLine[5] = classEntity.getClassName();
+        dataLine[6] = String.valueOf(classEntity.getTotalImports());
+        dataLine[7] = String.valueOf(classEntity.getTotalMethods());
+        dataLine[8] = String.valueOf(classEntity.getTotalMethodStatement());
+        dataLine[9] = String.valueOf(classEntity.getTestAnnotationCount());
+        dataLine[10] = String.valueOf(classEntity.getTestMethodWithoutAnnotationCount());
+        dataLine[11] = String.valueOf(classEntity.isHasTestInFileName());
+        dataLine[12] = String.valueOf(classEntity.isHasTestInClassName());
+        dataLine[13] = String.valueOf(classEntity.getHas_junitframeworkTest());
+        dataLine[14] = String.valueOf(classEntity.getHas_androidtestAndroidTestCase());
+        dataLine[15] = String.valueOf(classEntity.getHas_orgjunitAssert());
+        dataLine[16] = String.valueOf(classEntity.getHas_junitframeworkTestCase());
+        dataLine[17] = String.valueOf(classEntity.getHas_orgjunitTest());
+        dataLine[18] = String.valueOf(classEntity.getHas_androidtestInstrumentationTestCase());
+        dataLine[19] = String.valueOf(classEntity.getHas_androidtestActivityInstrumentationTestCase2());
+
+        fileLines.add(dataLine);
+
+        classCSVWriter.writeAll(fileLines, false);
+        classCSVWriter.flush();
+    }
 }

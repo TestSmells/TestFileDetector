@@ -1,40 +1,39 @@
-import entity.FileEntity;
+import entity.ClassEntity;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        final String rootDirectory = "C:\\Projects\\TestSmells\\testing";
+        final String rootDirectory = "C:\\Projects\\TestSmells_ExisitngTools\\samples\\bad";
+        TestFileDetector testFileDetector = TestFileDetector.createTestFileDetector();
+        ResultsWriter resultsWriter = ResultsWriter.createResultsWriter();
+        ClassEntity classEntity;
+
 
         //recursively identify all 'java' files in the specified directory
         Util.writeOperationLogEntry("Identify all 'java' test files", Util.OperationStatus.Started);
         FileWalker fw = new FileWalker();
-        List<FileEntity> files = fw.getJavaTestFiles(rootDirectory, true);
+        List<Path> files = fw.getJavaTestFiles(rootDirectory, true);
         Util.writeOperationLogEntry("Identify all 'java' test files", Util.OperationStatus.Completed);
 
 
         //foreach of the identified 'java' files, obtain details about the methods that they contain
         Util.writeOperationLogEntry("Obtain method details", Util.OperationStatus.Started);
-        TestFileDetector testFileDetector;
-        for (FileEntity fileEntity : files) {
+        for (Path file : files) {
             try {
-                testFileDetector = new TestFileDetector(fileEntity.getFilePath());
-                fileEntity.setMethods(testFileDetector.getMethodDetails());
-                fileEntity.setImports(testFileDetector.getImportDetails());
+                classEntity = testFileDetector.runAnalysis(file);
+                resultsWriter.outputToCSV(classEntity);
             } catch (Exception e) {
-                Util.writeException(e, "File: " + fileEntity.getFilePath());
+                Util.writeException(e, "File: " + file.toAbsolutePath().toString());
             }
         }
         Util.writeOperationLogEntry("Obtain method details", Util.OperationStatus.Completed);
 
 
-        //output the results into CSV files
-        Util.writeOperationLogEntry("Save results to CSV", Util.OperationStatus.Started);
-        ResultsWriter resultsWriter = new ResultsWriter(files);
-        resultsWriter.outputToCSV(true);
-        Util.writeOperationLogEntry("Save results to CSV", Util.OperationStatus.Completed);
+        resultsWriter.closeOutputFiles();
 
 
     }
