@@ -25,7 +25,7 @@ public class FileWalker {
                             //test files should have 'test(s)' as either a prefix or suffix
                             if (filePath.toString().toLowerCase().endsWith(".java") &&
                                     (fileNameWithoutExtension.toLowerCase().startsWith("test") || fileNameWithoutExtension.toLowerCase().endsWith("test") ||
-                                        fileNameWithoutExtension.toLowerCase().endsWith("tests") || fileNameWithoutExtension.toLowerCase().endsWith("tests"))) {
+                                        fileNameWithoutExtension.toLowerCase().startsWith("tests") || fileNameWithoutExtension.toLowerCase().endsWith("tests"))) {
                                 files.add(filePath);
                             }
                         }
@@ -76,7 +76,7 @@ public class FileWalker {
                 //test files should have 'test(s)' as either a prefix or suffix
                 if (file.toString().toLowerCase().endsWith(".java") &&
                         (fileNameWithoutExtension.toLowerCase().startsWith("test") || fileNameWithoutExtension.toLowerCase().endsWith("test") ||
-                            fileNameWithoutExtension.toLowerCase().endsWith("tests") || fileNameWithoutExtension.toLowerCase().endsWith("tests"))) {
+                            fileNameWithoutExtension.toLowerCase().startsWith("tests") || fileNameWithoutExtension.toLowerCase().endsWith("tests"))) {
                     files.add(file);
                 }
             }
