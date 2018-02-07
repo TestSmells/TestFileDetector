@@ -126,7 +126,7 @@ public class ResultsWriter {
         List<String[]> fileLines = new ArrayList<String[]>();
         String[] dataLine;
 
-        dataLine = new String[20];
+        dataLine = new String[21];
         dataLine[0] = classEntity.getAppName();
         dataLine[1] = classEntity.getTagName();
         dataLine[2] = classEntity.getFilePath();
@@ -136,17 +136,18 @@ public class ResultsWriter {
         dataLine[6] = String.valueOf(classEntity.getTotalImports());
         dataLine[7] = String.valueOf(classEntity.getTotalMethods());
         dataLine[8] = String.valueOf(classEntity.getTotalMethodStatement());
-        dataLine[9] = String.valueOf(classEntity.getTestAnnotationCount());
-        dataLine[10] = String.valueOf(classEntity.getTestMethodWithoutAnnotationCount());
-        dataLine[11] = String.valueOf(classEntity.isHasTestInFileName());
-        dataLine[12] = String.valueOf(classEntity.isHasTestInClassName());
-        dataLine[13] = String.valueOf(classEntity.getHas_junitframeworkTest());
-        dataLine[14] = String.valueOf(classEntity.getHas_androidtestAndroidTestCase());
-        dataLine[15] = String.valueOf(classEntity.getHas_orgjunitAssert());
-        dataLine[16] = String.valueOf(classEntity.getHas_junitframeworkTestCase());
-        dataLine[17] = String.valueOf(classEntity.getHas_orgjunitTest());
+        dataLine[9] = String.valueOf(classEntity.getTotalTestMethods());
+        dataLine[10] = String.valueOf(classEntity.getTestAnnotationCount());
+        dataLine[11] = String.valueOf(classEntity.getTestMethodWithoutAnnotationCount());
+        dataLine[12] = String.valueOf(classEntity.isHasTestInFileName());
+        dataLine[13] = String.valueOf(classEntity.isHasTestInClassName());
+        dataLine[14] = String.valueOf(classEntity.getHas_junitframeworkTest());
+        dataLine[15] = String.valueOf(classEntity.getHas_junitframeworkTestCase());
+        dataLine[16] = String.valueOf(classEntity.getHas_orgjunitTest());
+        dataLine[17] = String.valueOf(classEntity.getHas_androidtestAndroidTestCase());
         dataLine[18] = String.valueOf(classEntity.getHas_androidtestInstrumentationTestCase());
-        dataLine[19] = String.valueOf(classEntity.getHas_androidtestActivityInstrumentationTestCase2());
+        dataLine[19] = String.valueOf(classEntity.getHas_orgjunitAssert());
+        dataLine[20] = String.valueOf(classEntity.getHas_androidtestActivityInstrumentationTestCase2());
 
         fileLines.add(dataLine);
 
