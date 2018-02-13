@@ -101,8 +101,6 @@ public class TestFileDetector {
         }
 
         private Boolean containsKeyword(String input){
-            Boolean hasKeyword = false;
-
             Pattern pattern;
             Matcher matcher;
             for (String keyword : DEBT_KEYWORDS) {
@@ -117,10 +115,8 @@ public class TestFileDetector {
                     return true;
                 }
             }
-
-            return hasKeyword;
+            return false;
         }
-
 
         @Override
         public void visit(MethodDeclaration n, Void arg) {
