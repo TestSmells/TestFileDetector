@@ -12,6 +12,7 @@ public class ClassEntity {
    // private Map<String, Boolean> imports;
     private ArrayList<String> imports;
     private String className;
+    private ArrayList<String> technicalDebtComments;
 
     public ClassEntity(Path path) {
         this.path = path;
@@ -132,5 +133,18 @@ public class ClassEntity {
     public String getTagName() {
         String filePath = path.toAbsolutePath().toString();
         return filePath.split("\\\\")[4];
+    }
+
+    public ArrayList<String> getTechnicalDebtComments() {
+        return technicalDebtComments;
+    }
+
+    public void setTechnicalDebtComments(ArrayList<String> technicalDebtComments) {
+        this.technicalDebtComments = technicalDebtComments;
+    }
+
+    public Boolean getHasTechnicalDebtComments() {
+        return (technicalDebtComments.size() >=1);
+
     }
 }

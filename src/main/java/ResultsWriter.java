@@ -51,7 +51,8 @@ public class ResultsWriter {
                 "androidTestAndroidTestCase",
                 "androidTestInstrumentationTestCase",
                 "orgJunitAssert",
-                "androidTestActivityInstrumentationTestCase2"
+                "androidTestActivityInstrumentationTestCase2",
+                "HasTechnicalDebtComment",
         };
         fileLines.add(columnNames);
 
@@ -126,7 +127,7 @@ public class ResultsWriter {
         List<String[]> fileLines = new ArrayList<String[]>();
         String[] dataLine;
 
-        dataLine = new String[21];
+        dataLine = new String[22];
         dataLine[0] = classEntity.getAppName();
         dataLine[1] = classEntity.getTagName();
         dataLine[2] = classEntity.getFilePath();
@@ -148,6 +149,7 @@ public class ResultsWriter {
         dataLine[18] = String.valueOf(classEntity.getHas_androidtestInstrumentationTestCase());
         dataLine[19] = String.valueOf(classEntity.getHas_orgjunitAssert());
         dataLine[20] = String.valueOf(classEntity.getHas_androidtestActivityInstrumentationTestCase2());
+        dataLine[21] = String.valueOf(classEntity.getHasTechnicalDebtComments());
 
         fileLines.add(dataLine);
 

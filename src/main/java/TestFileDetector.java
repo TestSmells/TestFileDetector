@@ -21,6 +21,7 @@ public class TestFileDetector {
     private List<MethodEntity> methods;
     private ClassEntity classEntity;
     private ArrayList<String> imports;
+    private ArrayList<String> debt;
 
     /**
      * Constructor
@@ -41,6 +42,7 @@ public class TestFileDetector {
     private void initialize(){
         methods = new ArrayList<>();
         imports = new ArrayList<>();
+        debt = new ArrayList<>();
     }
 
     public ClassEntity runAnalysis(Path filePath) throws FileNotFoundException {
@@ -58,6 +60,7 @@ public class TestFileDetector {
 
             classEntity.setMethods(methods);
             classEntity.setImports(imports);
+            classEntity.setTechnicalDebtComments(debt);
         }
 
         return classEntity;
@@ -74,25 +77,29 @@ public class TestFileDetector {
 
             for (Comment comment:n.getAllContainedComments()) {
                 if (containsKeyword(comment.getContent())){
-                    System.out.println(comment.getContent());
+                    debt.add(comment.getContent());
+                    //System.out.println(comment.getContent());
                 }
             }
 
             if(n.getComment().isPresent()){
                 if (containsKeyword(n.getComment().get().getContent())){
-                    System.out.println(n.getComment().get().getContent());
+                    debt.add(n.getComment().get().getContent());
+                    //System.out.println(n.getComment().get().getContent());
                 }
             }
 
             if(n.getJavadocComment().isPresent()){
                 if (containsKeyword(n.getJavadocComment().get().getContent())){
-                    System.out.println(n.getJavadocComment().get().getContent());
+                    debt.add(n.getJavadocComment().get().getContent());
+                    //System.out.println(n.getJavadocComment().get().getContent());
                 }
             }
 
             for (Comment comment:n.getOrphanComments()) {
                 if (containsKeyword(comment.getContent())){
-                    System.out.println(comment.getContent());
+                    debt.add(comment.getContent());
+                    //System.out.println(comment.getContent());
                 }
             }
 
