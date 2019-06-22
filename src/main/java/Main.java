@@ -1,5 +1,6 @@
 import entity.ClassEntity;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
@@ -7,7 +8,18 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        final String rootDirectory = "C:\\Projects\\TestSmells_ExisitngTools\\samples\\bad";
+        if (args == null) {
+            System.out.println("Please provide the path to the project directory");
+            return;
+        }
+        if(!args[0].isEmpty()){
+            File inputFile = new File(args[0]);
+            if(!inputFile.exists() || !inputFile.isDirectory()) {
+                System.out.println("Please provide a valid path to the project directory");
+                return;
+            }
+        }
+        final String rootDirectory = args[0];
         TestFileDetector testFileDetector = TestFileDetector.createTestFileDetector();
         ResultsWriter resultsWriter = ResultsWriter.createResultsWriter();
         ClassEntity classEntity;
