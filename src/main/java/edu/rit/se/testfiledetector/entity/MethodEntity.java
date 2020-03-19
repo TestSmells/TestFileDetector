@@ -1,4 +1,4 @@
-package entity;
+package edu.rit.se.testfiledetector.entity;
 
 public class MethodEntity {
     private String methodName;

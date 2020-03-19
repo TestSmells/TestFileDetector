@@ -1,9 +1,8 @@
-package entity;
+package edu.rit.se.testfiledetector.entity;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 public class ClassEntity {

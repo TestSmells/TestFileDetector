@@ -1,3 +1,5 @@
+package edu.rit.se.testfiledetector;
+
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
@@ -5,8 +7,8 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.comments.Comment;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
-import entity.ClassEntity;
-import entity.MethodEntity;
+import edu.rit.se.testfiledetector.entity.ClassEntity;
+import edu.rit.se.testfiledetector.entity.MethodEntity;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
