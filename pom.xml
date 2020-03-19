@@ -7,6 +7,7 @@
     <groupId>edu.rit.se.testfiledetector</groupId>
     <artifactId>TestFileDetector</artifactId>
     <version>0.2</version>
+
     <build>
         <plugins>
             <plugin>
