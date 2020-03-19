@@ -1,6 +1,8 @@
+package edu.rit.se.testfiledetector;
+
 import com.opencsv.CSVWriter;
-import entity.ClassEntity;
-import entity.MethodEntity;
+import edu.rit.se.testfiledetector.entity.ClassEntity;
+import edu.rit.se.testfiledetector.entity.MethodEntity;
 
 import java.io.FileWriter;
 import java.io.IOException;

@@ -1,3 +1,5 @@
+package edu.rit.se.testfiledetector;
+
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;

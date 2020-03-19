@@ -1,4 +1,4 @@
-import entity.ClassEntity;
+package edu.rit.se.testfiledetector;
 
 import java.io.IOException;
 import java.nio.file.*;
