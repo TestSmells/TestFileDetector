@@ -33,10 +33,7 @@ public class ResultsWriter {
     private void createDebtFile() throws IOException {
         List<String[]> fileLines = new ArrayList<String[]>();
         String[] columnNames = {
-                "App",
-                "Tag",
                 "FilePath",
-                "RelativeFilePath",
                 "FileName",
                 "ClassName",
                 "Comment"
@@ -50,10 +47,7 @@ public class ResultsWriter {
     private void createClassFile() throws IOException {
         List<String[]> fileLines = new ArrayList<String[]>();
         String[] columnNames = {
-                "App",
-                "Tag",
                 "FilePath",
-                "RelativeFilePath",
                 "FileName",
                 "ClassName",
                 "TotalImports",
@@ -82,10 +76,7 @@ public class ResultsWriter {
     private void createMethodFile() throws IOException {
         List<String[]> fileLines = new ArrayList<String[]>();
         String[] columnNames = {
-                "App",
-                "Tag",
                 "FilePath",
-                "RelativeFilePath",
                 "FileName",
                 "ClassName",
                 "MethodName",
@@ -115,14 +106,11 @@ public class ResultsWriter {
         String[] dataLine;
         for (String comment : classEntity.getTechnicalDebtComments()) {
 
-            dataLine = new String[7];
-            dataLine[0] = classEntity.getAppName();
-            dataLine[1] = classEntity.getTagName();
-            dataLine[2] = classEntity.getFilePath();
-            dataLine[3] = classEntity.getRelativeFilePath();
-            dataLine[4] = classEntity.getFileName();
-            dataLine[5] = classEntity.getClassName();
-            dataLine[6] = "\""+comment.replace('"',' ')+"\"";
+            dataLine = new String[4];
+            dataLine[0] = classEntity.getFilePath();
+            dataLine[1] = classEntity.getFileName();
+            dataLine[2] = classEntity.getClassName();
+            dataLine[3] = "\""+comment.replace('"',' ')+"\"";
 
             fileLines.add(dataLine);
         }
@@ -141,22 +129,19 @@ public class ResultsWriter {
         String[] dataLine;
         for (MethodEntity methodEntity : classEntity.getMethods()) {
 
-            dataLine = new String[15];
-            dataLine[0] = classEntity.getAppName();
-            dataLine[1] = classEntity.getTagName();
-            dataLine[2] = classEntity.getFilePath();
-            dataLine[3] = classEntity.getRelativeFilePath();
-            dataLine[4] = classEntity.getFileName();
-            dataLine[5] = classEntity.getClassName();
-            dataLine[6] = methodEntity.getMethodName();
-            dataLine[7] = String.valueOf(methodEntity.getTotalStatements());
-            dataLine[8] = String.valueOf(methodEntity.getParameterCount());
-            dataLine[9] = methodEntity.getReturnType();
-            dataLine[10] = methodEntity.getAccessModifier();
-            dataLine[11] = String.valueOf(methodEntity.isHasAnnotation());
-            dataLine[12] = String.valueOf(methodEntity.isHasTestInName());
-            dataLine[13] = String.valueOf(classEntity.isHasTestInFileName());
-            dataLine[14] = String.valueOf(classEntity.isHasTestInClassName());
+            dataLine = new String[12];
+            dataLine[0] = classEntity.getFilePath();
+            dataLine[1] = classEntity.getFileName();
+            dataLine[2] = classEntity.getClassName();
+            dataLine[3] = methodEntity.getMethodName();
+            dataLine[4] = String.valueOf(methodEntity.getTotalStatements());
+            dataLine[5] = String.valueOf(methodEntity.getParameterCount());
+            dataLine[6] = methodEntity.getReturnType();
+            dataLine[7] = methodEntity.getAccessModifier();
+            dataLine[8] = String.valueOf(methodEntity.isHasAnnotation());
+            dataLine[9] = String.valueOf(methodEntity.isHasTestInName());
+            dataLine[10] = String.valueOf(classEntity.isHasTestInFileName());
+            dataLine[11] = String.valueOf(classEntity.isHasTestInClassName());
 
             fileLines.add(dataLine);
         }
@@ -168,29 +153,26 @@ public class ResultsWriter {
         List<String[]> fileLines = new ArrayList<String[]>();
         String[] dataLine;
 
-        dataLine = new String[22];
-        dataLine[0] = classEntity.getAppName();
-        dataLine[1] = classEntity.getTagName();
-        dataLine[2] = classEntity.getFilePath();
-        dataLine[3] = classEntity.getRelativeFilePath();
-        dataLine[4] = classEntity.getFileName();
-        dataLine[5] = classEntity.getClassName();
-        dataLine[6] = String.valueOf(classEntity.getTotalImports());
-        dataLine[7] = String.valueOf(classEntity.getTotalMethods());
-        dataLine[8] = String.valueOf(classEntity.getTotalMethodStatement());
-        dataLine[9] = String.valueOf(classEntity.getTotalTestMethods());
-        dataLine[10] = String.valueOf(classEntity.getTestAnnotationCount());
-        dataLine[11] = String.valueOf(classEntity.getTestMethodWithoutAnnotationCount());
-        dataLine[12] = String.valueOf(classEntity.isHasTestInFileName());
-        dataLine[13] = String.valueOf(classEntity.isHasTestInClassName());
-        dataLine[14] = String.valueOf(classEntity.getHas_junitframeworkTest());
-        dataLine[15] = String.valueOf(classEntity.getHas_junitframeworkTestCase());
-        dataLine[16] = String.valueOf(classEntity.getHas_orgjunitTest());
-        dataLine[17] = String.valueOf(classEntity.getHas_androidtestAndroidTestCase());
-        dataLine[18] = String.valueOf(classEntity.getHas_androidtestInstrumentationTestCase());
-        dataLine[19] = String.valueOf(classEntity.getHas_orgjunitAssert());
-        dataLine[20] = String.valueOf(classEntity.getHas_androidtestActivityInstrumentationTestCase2());
-        dataLine[21] = String.valueOf(classEntity.getHasTechnicalDebtComments());
+        dataLine = new String[19];
+        dataLine[0] = classEntity.getFilePath();
+        dataLine[1] = classEntity.getFileName();
+        dataLine[2] = classEntity.getClassName();
+        dataLine[3] = String.valueOf(classEntity.getTotalImports());
+        dataLine[4] = String.valueOf(classEntity.getTotalMethods());
+        dataLine[5] = String.valueOf(classEntity.getTotalMethodStatement());
+        dataLine[6] = String.valueOf(classEntity.getTotalTestMethods());
+        dataLine[7] = String.valueOf(classEntity.getTestAnnotationCount());
+        dataLine[8] = String.valueOf(classEntity.getTestMethodWithoutAnnotationCount());
+        dataLine[9] = String.valueOf(classEntity.isHasTestInFileName());
+        dataLine[10] = String.valueOf(classEntity.isHasTestInClassName());
+        dataLine[11] = String.valueOf(classEntity.getHas_junitframeworkTest());
+        dataLine[12] = String.valueOf(classEntity.getHas_junitframeworkTestCase());
+        dataLine[13] = String.valueOf(classEntity.getHas_orgjunitTest());
+        dataLine[14] = String.valueOf(classEntity.getHas_androidtestAndroidTestCase());
+        dataLine[15] = String.valueOf(classEntity.getHas_androidtestInstrumentationTestCase());
+        dataLine[16] = String.valueOf(classEntity.getHas_orgjunitAssert());
+        dataLine[17] = String.valueOf(classEntity.getHas_androidtestActivityInstrumentationTestCase2());
+        dataLine[18] = String.valueOf(classEntity.getHasTechnicalDebtComments());
 
         fileLines.add(dataLine);
 

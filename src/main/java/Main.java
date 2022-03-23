@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        if (args == null) {
+        if (args == null || args.length == 0) {
             System.out.println("Please provide the path to the project directory");
             return;
         }

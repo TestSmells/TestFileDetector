@@ -115,26 +115,6 @@ public class ClassEntity {
         return imports.stream().anyMatch(i -> i.equals("org.junit.Assert"));
     }
 
-    public String getRelativeFilePath() {
-        String filePath = path.toAbsolutePath().toString();
-        String[] splitString = filePath.split("\\\\");
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < 5; i++) {
-            stringBuilder.append(splitString[i] + "\\");
-        }
-        return filePath.substring(stringBuilder.toString().length()).replace("\\", "/");
-    }
-
-    public String getAppName() {
-        String filePath = path.toAbsolutePath().toString();
-        return filePath.split("\\\\")[3];
-    }
-
-    public String getTagName() {
-        String filePath = path.toAbsolutePath().toString();
-        return filePath.split("\\\\")[4];
-    }
-
     public ArrayList<String> getTechnicalDebtComments() {
         return technicalDebtComments;
     }
